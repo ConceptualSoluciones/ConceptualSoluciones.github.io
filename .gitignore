@@ -1,0 +1,13 @@
+# Archivos del sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Configuración del editor
+.vscode/
+
+# Comprimidos, respaldos y archivos de trabajo
+*.zip
+*.rar
+*-original.*
+*-anterior.*

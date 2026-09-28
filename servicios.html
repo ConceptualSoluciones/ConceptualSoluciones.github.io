@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Servicios · Conceptual Soluciones Integrales</title>
+<meta name="description" content="Líneas de consultoría con Enfoque 360: gestión financiera, excelencia operativa, estrategia de marca y talento.">
+<script>document.documentElement.classList.add('js');</script>
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilos.css">
+<style>
+/* ===== Propuesta de servicios: versión editorial minimalista ===== */
+
+/* intro en dos columnas */
+.sv-intro{display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:end; padding-bottom:56px; border-bottom:1px solid var(--line);}
+.sv-eyebrow{display:block; font-size:11px; letter-spacing:.32em; color:var(--gold); font-weight:800; margin-bottom:22px;}
+.sv-intro h2{font-size:clamp(40px,6vw,72px); line-height:1; color:var(--cream); font-weight:500; letter-spacing:-.02em;}
+.sv-intro h2 em{font-style:italic; color:var(--gold);}
+.sv-intro p{color:var(--muted); font-size:17px; line-height:1.75; max-width:460px;}
+
+/* enfoque 360 como acordeón editorial */
+.sv-list{list-style:none; margin:0; padding:0;}
+.sv-item{border-bottom:1px solid var(--line); position:relative;}
+.sv-item::after{
+  content:""; position:absolute; left:0; bottom:-1px; height:1px; width:100%; background:var(--gold);
+  transform:scaleX(0); transform-origin:left; transition:transform .8s var(--ease);
+}
+.sv-item.open::after{transform:scaleX(1);}
+.sv-head{
+  width:100%; display:grid; grid-template-columns:90px 1fr auto; align-items:center; gap:24px;
+  background:none; border:0; padding:38px 0; cursor:pointer; text-align:left; color:inherit; font:inherit;
+}
+.sv-num{font-family:var(--serif); font-size:17px; color:var(--gold-dim); transition:color .4s ease;}
+.sv-title{font-family:var(--serif); font-size:clamp(24px,3.4vw,40px); line-height:1.15; font-weight:500; color:var(--muted); letter-spacing:-.01em; transition:color .4s ease, transform .6s var(--ease);}
+.sv-toggle{
+  width:44px; height:44px; border:1px solid var(--line); border-radius:50%; position:relative; flex:none;
+  transition:border-color .4s ease, transform .6s var(--ease);
+}
+.sv-toggle::before, .sv-toggle::after{content:""; position:absolute; left:50%; top:50%; width:14px; height:1px; background:var(--gold); transform:translate(-50%,-50%);}
+.sv-toggle::after{transform:translate(-50%,-50%) rotate(90deg); transition:transform .4s var(--ease);}
+.sv-head:hover .sv-title{color:var(--cream); transform:translateX(6px);}
+.sv-head:hover .sv-toggle{border-color:var(--gold);}
+.sv-item.open .sv-num{color:var(--gold);}
+.sv-item.open .sv-title{color:var(--cream);}
+.sv-item.open .sv-toggle{border-color:var(--gold); transform:rotate(180deg);}
+.sv-item.open .sv-toggle::after{transform:translate(-50%,-50%) rotate(0deg);}
+
+.sv-body{display:grid; grid-template-rows:0fr; transition:grid-template-rows .6s var(--ease);}
+.sv-item.open .sv-body{grid-template-rows:1fr;}
+.sv-body > div{overflow:hidden;}
+.sv-content{display:grid; grid-template-columns:90px 1fr 1fr; gap:24px; padding:0 68px 48px 0;}
+.sv-content ul{grid-column:2; list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:14px;}
+.sv-content li{position:relative; padding-left:26px; color:#d9d1c2; font-size:16px; line-height:1.55;}
+.sv-content li::before{content:""; position:absolute; left:0; top:.78em; width:12px; height:1px; background:var(--gold);}
+.sv-benefit{grid-column:3; margin-left:24px; font-family:var(--serif); font-style:italic; font-size:clamp(19px,1.8vw,22px); line-height:1.5; color:var(--gold-brt); padding-left:32px; border-left:1px solid var(--line);}
+.sv-benefit span{display:block; font-family:var(--sans); font-style:normal; font-size:10.5px; letter-spacing:.3em; font-weight:800; color:var(--gold-dim); margin-bottom:12px;}
+
+/* líneas de servicio como índice con imagen */
+.sv-lines-head{display:flex; justify-content:space-between; align-items:end; gap:40px; margin-bottom:40px;}
+.sv-lines-head h2{font-size:clamp(30px,4vw,46px); line-height:1.1; color:var(--cream); font-weight:500; letter-spacing:-.01em;}
+.sv-lines-head p{color:var(--muted); max-width:360px; font-size:15.5px;}
+.sv-lines{border-top:1px solid var(--line);}
+.sv-line{
+  display:grid; grid-template-columns:90px 1fr 300px 60px; align-items:center; gap:36px;
+  padding:34px 0; border-bottom:1px solid var(--line); text-decoration:none; color:inherit; position:relative;
+}
+.sv-line::before{
+  content:""; position:absolute; inset:0 -28px; background:linear-gradient(90deg, rgba(205,160,73,0.07), transparent 70%);
+  opacity:0; transition:opacity .5s ease; pointer-events:none;
+}
+.sv-line .sv-num{font-size:17px;}
+.sv-line h3{font-size:clamp(24px,2.8vw,34px); font-weight:500; color:var(--cream); margin-bottom:10px; transition:color .4s ease;}
+.sv-line p{color:var(--muted); font-size:15.5px; max-width:460px;}
+.sv-line .thumb{
+  aspect-ratio:16/10; background-size:cover; background-position:center; border:1px solid var(--line);
+  filter:grayscale(.85) brightness(.75); transition:filter .7s ease, transform .9s var(--ease);
+}
+.sv-line .go{
+  width:52px; height:52px; border:1px solid var(--line); border-radius:50%; display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-size:18px; transition:background .4s ease, color .4s ease, border-color .4s ease, transform .5s var(--ease);
+}
+.sv-line:hover::before{opacity:1;}
+.sv-line:hover h3{color:var(--gold-brt);}
+.sv-line:hover .thumb{filter:none; transform:scale(1.03);}
+.sv-line:hover .go{background:var(--gold); color:#100d08; border-color:var(--gold); transform:translateX(4px);}
+.thumb.t-nuevos{background-image:var(--img-nuevos);}
+.thumb.t-existentes{background-image:var(--img-existentes);}
+.thumb.t-expansion{background-image:var(--img-expansion);}
+
+@media (max-width:900px){
+  .sv-intro{grid-template-columns:1fr; gap:28px;}
+  .sv-head{grid-template-columns:44px 1fr auto; gap:14px; padding:28px 0;}
+  .sv-content{grid-template-columns:1fr; gap:28px; padding:0 0 36px;}
+  .sv-content ul, .sv-benefit{grid-column:1; margin-left:0;}
+  .sv-benefit{padding-left:22px;}
+  .sv-lines-head{flex-direction:column; align-items:flex-start; gap:14px;}
+  .sv-line{grid-template-columns:1fr; gap:18px; padding:30px 0;}
+  .sv-line .thumb{order:-1; filter:none;}
+  .sv-line .go{display:none;}
+  .sv-line::before{display:none;}
+}
+</style>
+</head>
+<body data-page="servicios">
+
+<div data-include="header"></div>
+
+<main>
+  <section class="page-hero banner-servicios">
+    <div class="wrap">
+      <span class="crumb"><a href="inicio.html">INICIO</a> · SERVICIOS</span>
+      <h1>Ecosistema de servicios</h1>
+      <p>Soluciones integrales para cada etapa de tu negocio gastronómico.</p>
+      <div class="rule"></div>
+    </div>
+  </section>
+
+  <!-- ============ ENFOQUE 360 ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="sv-intro reveal">
+        <div>
+          <span class="sv-eyebrow">LÍNEAS DE CONSULTORÍA</span>
+          <h2>Enfoque <em>360</em></h2>
+        </div>
+        <p>Abordamos tu negocio de manera simultánea e interconectada en sus áreas más críticas, desde la concepción hasta la operación continua.</p>
+      </div>
+
+      <ul class="sv-list">
+        <li class="sv-item open reveal">
+          <button class="sv-head" aria-expanded="true" aria-controls="sv-fin">
+            <span class="sv-num">01</span><span class="sv-title">Gestión financiera</span><span class="sv-toggle" aria-hidden="true"></span>
+          </button>
+          <div class="sv-body" id="sv-fin"><div>
+            <div class="sv-content">
+              <ul>
+                <li>Ingeniería de menú para máxima rentabilidad.</li>
+                <li>Control estricto de costos (Food &amp; Beverage Cost).</li>
+                <li>Auditoría de inventarios y reducción de mermas.</li>
+                <li>Análisis de Estado de Resultados (P&amp;L).</li>
+              </ul>
+              <p class="sv-benefit"><span>BENEFICIO</span>Transformamos tus números para asegurar un flujo de caja saludable y un retorno de inversión acelerado.</p>
+            </div>
+          </div></div>
+        </li>
+
+        <li class="sv-item reveal">
+          <button class="sv-head" aria-expanded="false" aria-controls="sv-ope">
+            <span class="sv-num">02</span><span class="sv-title">Excelencia operativa</span><span class="sv-toggle" aria-hidden="true"></span>
+          </button>
+          <div class="sv-body" id="sv-ope"><div>
+            <div class="sv-content">
+              <ul>
+                <li>Estandarización de recetas y procesos (SOPs).</li>
+                <li>Implementación de manuales de operaciones.</li>
+                <li>Gestión de calidad e inocuidad (HACCP / BPM).</li>
+                <li>Optimización de tiempos y flujos de trabajo.</li>
+              </ul>
+              <p class="sv-benefit"><span>BENEFICIO</span>Logramos que tu negocio funcione como un reloj suizo, garantizando consistencia sin depender de que el dueño esté presente.</p>
+            </div>
+          </div></div>
+        </li>
+
+        <li class="sv-item reveal">
+          <button class="sv-head" aria-expanded="false" aria-controls="sv-mar">
+            <span class="sv-num">03</span><span class="sv-title">Estrategia de marca</span><span class="sv-toggle" aria-hidden="true"></span>
+          </button>
+          <div class="sv-body" id="sv-mar"><div>
+            <div class="sv-content">
+              <ul>
+                <li>Definición de concepto y ADN de marca.</li>
+                <li>Diseño de la Experiencia del Cliente (CX).</li>
+                <li>Estrategias de lanzamiento y apertura.</li>
+                <li>Posicionamiento en el mercado gastronómico.</li>
+              </ul>
+              <p class="sv-benefit"><span>BENEFICIO</span>No solo abrimos puertas: construimos marcas potentes que atraen y fidelizan a los clientes correctos.</p>
+            </div>
+          </div></div>
+        </li>
+
+        <li class="sv-item reveal">
+          <button class="sv-head" aria-expanded="false" aria-controls="sv-tal">
+            <span class="sv-num">04</span><span class="sv-title">Talento y cultura</span><span class="sv-toggle" aria-hidden="true"></span>
+          </button>
+          <div class="sv-body" id="sv-tal"><div>
+            <div class="sv-content">
+              <ul>
+                <li>Estrategias de reclutamiento y selección efectiva.</li>
+                <li>Capacitación y manuales de funciones (MOF).</li>
+                <li>Desarrollo de liderazgo y clima laboral.</li>
+                <li>Sistemas de incentivos y retención.</li>
+              </ul>
+              <p class="sv-benefit"><span>BENEFICIO</span>Creamos equipos de alto rendimiento comprometidos con la visión de tu empresa, reduciendo la rotación de personal.</p>
+            </div>
+          </div></div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ LÍNEAS DE SERVICIO ============ -->
+  <section class="section alt">
+    <div class="wrap">
+      <div class="sv-lines-head reveal">
+        <div>
+          <span class="sv-eyebrow">SOLUCIONES POR ETAPA</span>
+          <h2>¿En qué etapa está tu negocio?</h2>
+        </div>
+        <p>Elige tu punto de partida y descubre la hoja de ruta que diseñamos para ti.</p>
+      </div>
+
+      <div class="sv-lines">
+        <a class="sv-line reveal" href="nuevos-negocios.html">
+          <span class="sv-num">01</span>
+          <div>
+            <h3>Nuevos negocios</h3>
+            <p>Eliminamos el «ensayo y error». No solo abrimos locales: diseñamos negocios rentables desde el primer día.</p>
+          </div>
+          <div class="thumb t-nuevos" role="img" aria-label="Planos y tablet en un local en construcción"></div>
+          <span class="go" aria-hidden="true">→</span>
+        </a>
+        <a class="sv-line reveal" href="negocios-existentes.html">
+          <span class="sv-num">02</span>
+          <div>
+            <h3>Negocios existentes</h3>
+            <p>Transformamos restaurantes que sobreviven en máquinas de eficiencia operativa.</p>
+          </div>
+          <div class="thumb t-existentes" role="img" aria-label="Consultor revisando indicadores en un restaurante"></div>
+          <span class="go" aria-hidden="true">→</span>
+        </a>
+        <a class="sv-line reveal" href="expansion.html">
+          <span class="sv-num">03</span>
+          <div>
+            <h3>Auditorías y expansión</h3>
+            <p>Protegemos tu marca y preparamos tu operación para crecer con estándares inquebrantables.</p>
+          </div>
+          <div class="thumb t-expansion" role="img" aria-label="Documento de auditoría con lupa y mapa de expansión"></div>
+          <span class="go" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div data-include="cta"></div>
+<div data-include="footer"></div>
+
+<script src="main.js"></script>
+<script>
+  // acordeón del Enfoque 360: uno abierto a la vez
+  document.querySelectorAll('.sv-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const item = head.closest('.sv-item');
+      const willOpen = !item.classList.contains('open');
+      document.querySelectorAll('.sv-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.sv-head').setAttribute('aria-expanded', 'false');
+      });
+      if (willOpen) { item.classList.add('open'); head.setAttribute('aria-expanded', 'true'); }
+    });
+  });
+</script>
+</body>
+</html>
