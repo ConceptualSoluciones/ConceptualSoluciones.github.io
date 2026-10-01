@@ -278,10 +278,9 @@ const chartWidth = host => Math.round(Math.max(300, Math.min(520, host.clientWid
 /* anima la gráfica de 0 a 1 cuando entra en pantalla */
 const easeOut = t => 1 - Math.pow(1 - t, 3);   // misma curva que las apariciones (--ease)
 const CHART_DUR = 1800;   // misma duración para todas las gráficas
-const menosMovimiento = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 function animateOnView(host, render, duration = CHART_DUR) {
   render(0);
-  if (menosMovimiento || !('IntersectionObserver' in window)) { render(1); return; }
+  if (!('IntersectionObserver' in window)) { render(1); return; }
   const io = new IntersectionObserver(entries => {
     if (!entries.some(e => e.isIntersecting)) return;
     io.disconnect();
