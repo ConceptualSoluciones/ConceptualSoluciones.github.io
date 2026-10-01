@@ -9,9 +9,22 @@ const CONTACTO = {
   telefono: '+51 923 498 449',
   telefonoHref: 'tel:+51923498449',
   email: 'conceptualsoluciones@gmail.com',
+  // redes: pon el enlace completo; si queda en '#', el ícono no se muestra
   instagram: '#',
   tiktok: '#',
   linkedin: '#'
+};
+
+/* ---------- datos legales del negocio ----------
+   Se muestran en el pie de página y en las páginas legales.
+   Reemplaza cada texto entre [CORCHETES] por el dato real
+   tal como figura en SUNAT. */
+const NEGOCIO = {
+  nombreComercial: 'Conceptual · Soluciones Integrales',
+  razonSocial: '[RAZÓN SOCIAL O NOMBRE DEL TITULAR]',
+  ruc: '20614681960',
+  direccion: 'Lucio Mansilla 233, Lima, Perú',
+  actualizacion: '30 de septiembre de 2026'   // fecha de las políticas legales, p. ej. '30 de septiembre de 2026'
 };
 
 /* ---------- íconos (símbolos SVG reutilizados) ---------- */
@@ -81,12 +94,17 @@ function renderCta(extra) {
       <span class="wa-ic"><svg viewBox="0 0 32 32" aria-hidden="true"><use href="#ic-wa"/></svg></span>
       Agenda tu cita a través de WhatsApp
     </a>
+    <p class="wa-note">Al escribirnos por WhatsApp, teléfono o correo, usamos tus datos solo para responder tu consulta y coordinar la cita. Más detalles en nuestra <a href="privacidad.html">Política de privacidad</a>.</p>
   </div>
 </section>`;
 }
 
 /* ---------- pie de página ---------- */
 function renderFooter() {
+  const redes = [['instagram', 'Instagram', 'ic-ig'], ['tiktok', 'TikTok', 'ic-tt'], ['linkedin', 'LinkedIn', 'ic-li']]
+    .filter(([k]) => CONTACTO[k] && CONTACTO[k] !== '#')
+    .map(([k, nombre, ic]) => `<a href="${CONTACTO[k]}" target="_blank" rel="noopener" aria-label="${nombre} (se abre en otra pestaña)"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#${ic}"/></svg></a>`)
+    .join('');
   return `
 <footer class="site-footer">
   <div class="wrap">
@@ -108,14 +126,18 @@ function renderFooter() {
           </a>
         </div>
       </div>
-      <div class="foot-col">
+      ${redes ? `<div class="foot-col">
         <h6>Síguenos</h6>
-        <div class="soc-row">
-          <a href="${CONTACTO.instagram}" aria-label="Instagram"><svg viewBox="0 0 24 24"><use href="#ic-ig"/></svg></a>
-          <a href="${CONTACTO.tiktok}" aria-label="TikTok"><svg viewBox="0 0 24 24"><use href="#ic-tt"/></svg></a>
-          <a href="${CONTACTO.linkedin}" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><use href="#ic-li"/></svg></a>
-        </div>
-      </div>
+        <div class="soc-row">${redes}</div>
+      </div>` : ''}
+    </div>
+    <div class="foot-legal">
+      <p class="biz"><b data-negocio="razonSocial"></b> · RUC <span data-negocio="ruc"></span><br><span data-negocio="direccion"></span></p>
+      <nav aria-label="Información legal">
+        <a href="privacidad.html">Política de privacidad</a>
+        <a href="cookies.html">Política de cookies</a>
+        <a href="terminos.html">Términos y condiciones</a>
+      </nav>
     </div>
     <div class="foot-bottom">© ${new Date().getFullYear()} CONCEPTUAL, Soluciones Integrales. Todos los derechos reservados.</div>
   </div>
@@ -128,6 +150,18 @@ document.body.insertAdjacentHTML('afterbegin', ICONOS);
 document.querySelectorAll('[data-include="header"]').forEach(el => { el.outerHTML = renderHeader(page); });
 document.querySelectorAll('[data-include="cta"]').forEach(el => { el.outerHTML = renderCta(el.dataset.extra); });
 document.querySelectorAll('[data-include="footer"]').forEach(el => { el.outerHTML = renderFooter(); });
+
+/* ---------- saltar al contenido (teclado y lectores de pantalla) ---------- */
+const mainEl = document.querySelector('main');
+if (mainEl) {
+  mainEl.id = mainEl.id || 'contenido';
+  mainEl.setAttribute('tabindex', '-1');
+  document.body.insertAdjacentHTML('afterbegin', `<a class="skip-link" href="#${mainEl.id}">Saltar al contenido</a>`);
+}
+document.querySelectorAll('[data-negocio]').forEach(el => {
+  el.textContent = NEGOCIO[el.dataset.negocio] || '';
+  el.classList.toggle('todo', el.textContent.includes('['));   // resalta los datos aún sin completar
+});
 
 /* ---------- menú móvil ---------- */
 const burger = document.getElementById('burgerBtn');
@@ -244,9 +278,10 @@ const chartWidth = host => Math.round(Math.max(300, Math.min(520, host.clientWid
 /* anima la gráfica de 0 a 1 cuando entra en pantalla */
 const easeOut = t => 1 - Math.pow(1 - t, 3);   // misma curva que las apariciones (--ease)
 const CHART_DUR = 1800;   // misma duración para todas las gráficas
+const menosMovimiento = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 function animateOnView(host, render, duration = CHART_DUR) {
   render(0);
-  if (!('IntersectionObserver' in window)) { render(1); return; }
+  if (menosMovimiento || !('IntersectionObserver' in window)) { render(1); return; }
   const io = new IntersectionObserver(entries => {
     if (!entries.some(e => e.isIntersecting)) return;
     io.disconnect();
